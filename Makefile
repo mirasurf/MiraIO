@@ -39,23 +39,7 @@ setup-test-env:
 clean:
 	rm -f miraio coverage.out coverage.html
 
-# Run MinIO for testing (as Docker container)
-start-minio:
-	docker run -d --name miraio-test-minio \
-		-p 9000:9000 -p 9001:9001 \
-		-e "MINIO_ROOT_USER=minio" \
-		-e "MINIO_ROOT_PASSWORD=minio123" \
-		quay.io/minio/minio server /data --console-address ":9001"
-
-# Stop test MinIO
-stop-minio:
-	docker stop miraio-test-minio || true
-	docker rm miraio-test-minio || true
-
 # Full test cycle with MinIO
-test-full: stop-minio start-minio
-	@echo "Waiting for MinIO to start..."
-	@sleep 5
+test-full:
 	@$(MAKE) setup-test-env
 	@$(MAKE) test-integration
-	@$(MAKE) stop-minio 
