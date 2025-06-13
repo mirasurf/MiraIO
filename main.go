@@ -12,7 +12,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
-	"github.com/mirago/miraio/pkg/utils"
+	"github.com/mirago/miraio/utils"
 )
 
 const (

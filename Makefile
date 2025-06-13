@@ -2,11 +2,11 @@
 
 # Build the application
 build:
-	go build -o bin/miraio pkg/main.go
+	go build -o bin/miraio main.go
 
 # Run the application
 dev:
-	MIRAIO_ENV=development GIN_MODE=debug go run pkg/main.go
+	MIRAIO_ENV=development GIN_MODE=debug go run main.go
 
 # Run all tests
 test: test-unit test-integration

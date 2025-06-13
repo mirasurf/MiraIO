@@ -16,7 +16,7 @@ RUN --mount=type=cache,target=/gomod-cache go mod download
 # Build the application
 RUN --mount=type=cache,target=/gomod-cache \
     --mount=type=cache,target=/go-cache \
-    CGO_ENABLED=0 GOOS=linux go build -o /app/miraio pkg/main.go
+    CGO_ENABLED=0 GOOS=linux go build -o /app/miraio main.go
 
 # Final stage
 FROM registry.cn-hangzhou.aliyuncs.com/lacogito/alpine:3.21
