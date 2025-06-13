@@ -15,6 +15,10 @@ import (
 	"github.com/mirago/miraio/pkg/utils"
 )
 
+const (
+	DefaultPort = "9080"
+)
+
 var minioClient *minio.Client
 var bucketName string
 var publicURL string
@@ -64,7 +68,7 @@ func main() {
 
 	port := os.Getenv("MIRAIO_PORT")
 	if port == "" {
-		port = "9080"
+		port = DefaultPort
 	}
 	utils.LogInfo("Server running on %s", port)
 	utils.LogFatal("Error starting server: %v", router.Run(":"+port))
