@@ -6,7 +6,7 @@ build:
 
 # Run the application
 dev:
-	GIN_MODE=debug go run pkg/main.go
+	MIRAIO_ENV=development GIN_MODE=debug go run pkg/main.go
 
 # Run all tests
 test: test-unit test-integration
@@ -19,11 +19,11 @@ test-unit:
 test-integration:
 	@echo "Starting integration tests..."
 	@echo "Make sure MinIO is running on localhost:9000 with credentials minio/minio123"
-	MIRAIO_ENV=test go test -v -run Integration ./...
+	MIRAIO_ENV=development GIN_MODE=debug go test -v -run Integration ./...
 
 # Run integration tests with coverage
 test-integration-coverage:
-	MIRAIO_ENV=test go test -v -run Integration -coverprofile=coverage.out ./...
+	MIRAIO_ENV=development GIN_MODE=debug go test -v -run Integration -coverprofile=coverage.out ./...
 	go tool cover -html=coverage.out -o coverage.html
 
 # Setup test environment (create test bucket in MinIO)

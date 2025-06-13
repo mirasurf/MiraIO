@@ -8,12 +8,14 @@ services:
     environment:
       - MINIO_ROOT_USER=minio
       - MINIO_ROOT_PASSWORD=minio123
+      - MINIO_ADDRESS=:9380
+      - MINIO_CONSOLE_ADDRESS=:9381
     volumes:
       - minio_data:/data
     ports:
-      - "9000:9000"
-      - "9001:9001"
-    command: server /data --console-address ":9001"
+      - "9380:9380"
+      - "9381:9381"
+    command: server /data
     restart: unless-stopped
 
 volumes:

@@ -30,7 +30,7 @@ Generate a presigned URL for file upload.
 
 **Example:**
 ```bash
-curl "http://localhost:5000/presign?filename=image.jpg&type=image/jpeg"
+curl "http://localhost:9080/presign?filename=image.jpg&type=image/jpeg"
 ```
 
 ## Environment Variables
@@ -65,7 +65,7 @@ make run
 go run main.go
 ```
 
-The service will start on port 5000.
+The service will start on port 9080.
 
 ## Testing
 
@@ -127,7 +127,7 @@ The tests automatically:
 
 1. **Get a presigned URL:**
 ```bash
-curl "http://localhost:5000/presign?filename=my-image.jpg&type=image/jpeg"
+curl "http://localhost:9080/presign?filename=my-image.jpg&type=image/jpeg"
 ```
 
 Response:
