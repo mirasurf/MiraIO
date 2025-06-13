@@ -10,26 +10,7 @@ permissions:
   packages: write
 
 jobs:
-  filter-changes:
-    runs-on: ubuntu-latest
-    outputs:
-      miraio: ${{ steps.filter.outputs.miraio }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Filter changed paths
-        id: filter
-        uses: dorny/paths-filter@v3
-        with:
-          filters: |
-            miraio: 
-              - 'Dockerfile'
-              - 'TRIGGER_REBUILD'
-              - 'pkg/**'
-
   build-and-push:
-    needs: filter-changes
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -39,26 +20,16 @@ jobs:
             context: .
             tag: miraio
             version: latest
-            condition: ${{ needs.filter-changes.outputs.frontend }}
       fail-fast: false
 
     steps:
-      - name: Check if component has changes
-        if: ${{ matrix.component.condition != 'true' }}
-        run: |
-          echo "No changes detected for ${{ matrix.component.name }}. Skipping build."
-          exit 0
-
       - name: Checkout code
-        if: ${{ matrix.component.condition == 'true' }}
         uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
-        if: ${{ matrix.component.condition == 'true' }}
         uses: docker/setup-buildx-action@v3
 
       - name: Log in to Aliyuncs Registry
-        if: ${{ matrix.component.condition == 'true' }}
         uses: docker/login-action@v3
         with:
           registry: registry.cn-hangzhou.aliyuncs.com
@@ -66,7 +37,6 @@ jobs:
           password: ${{ secrets.ALIYUNCS_TOKEN }}
 
       - name: Build and push ${{ matrix.component.name }} image
-        if: ${{ matrix.component.condition == 'true' }}
         uses: docker/build-push-action@v5
         with:
           context: ${{ matrix.component.context }}
